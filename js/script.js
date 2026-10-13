@@ -43,12 +43,42 @@
     window.addEventListener("resize", function () { if (window.innerWidth > 900 && menu.classList.contains("is-open")) setMenu(false); });
   }
 
-  /* Current page in the menu */
+  /* Current page in the menu (a service page also marks Services) */
   var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   if (here.indexOf(".") === -1) here = (here || "index") + ".html";
-  $$(".nav-link").forEach(function (a) {
+  $$(".nav-link, .sub-link").forEach(function (a) {
     if ((a.getAttribute("href") || "").toLowerCase() === here) a.setAttribute("aria-current", "page");
   });
+  if ($(".sub-link[aria-current]")) {
+    var sl = $('.has-sub > .nav-link');
+    if (sl) sl.classList.add("is-active");
+  }
+
+  /* The Services dropdown: hover or click on a computer, tap to fold out on a phone */
+  var sub = $("[data-sub]"), subBtn = sub ? $(".sub-toggle", sub) : null, subTimer = null;
+  var wideNav = window.matchMedia ? window.matchMedia("(min-width: 901px)") : { matches: true };
+  function setSub(open) {
+    if (!sub) return;
+    clearTimeout(subTimer);
+    sub.classList.toggle("is-open", open);
+    subBtn.setAttribute("aria-expanded", String(open));
+  }
+  if (sub && subBtn) {
+    subBtn.addEventListener("click", function () { setSub(!sub.classList.contains("is-open")); });
+    if (canHover) {
+      sub.addEventListener("mouseenter", function () { if (wideNav.matches) { clearTimeout(subTimer); subTimer = setTimeout(function () { setSub(true); }, 90); } });
+      sub.addEventListener("mouseleave", function () { if (wideNav.matches) { clearTimeout(subTimer); subTimer = setTimeout(function () { setSub(false); }, 220); } });
+    }
+    sub.addEventListener("focusout", function (e) {
+      if (wideNav.matches && !(e.relatedTarget && sub.contains(e.relatedTarget))) setSub(false);
+    });
+    d.addEventListener("click", function (e) { if (wideNav.matches && !sub.contains(e.target)) setSub(false); });
+    d.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && sub.classList.contains("is-open") && wideNav.matches) { setSub(false); subBtn.focus(); }
+    });
+    // on a phone, open the services list straight away when you are on a service page
+    if (!wideNav.matches && $(".sub-link[aria-current]")) setSub(true);
+  }
 
   /* ------------------------------------------------------------------
      2. HEADER STATE + FLOATING WHATSAPP BUTTON
@@ -343,6 +373,8 @@
       each.textContent = naira(price) + " each";
       total.textContent = naira(price * q);
       order.href = waLink("Hello 100EMPIRE, I would like to order " + q + " x " + names[type] + " (" + row.size + "). Estimate: " + naira(price * q) + ".");
+      var fpay = $("#f-pay", est);
+      if (fpay) fpay.href = "pay.html?item=frames--" + type + "--" + row.size.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "&qty=" + q;
       typeBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-ftype") === type)); });
     };
     typeBtns.forEach(function (b) { b.addEventListener("click", function () { type = b.getAttribute("data-ftype"); render(); }); });

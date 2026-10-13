@@ -1,0 +1,465 @@
+{
+ "currency": "NGN",
+ "items": [
+  {
+   "id": "graphic-design--single",
+   "group": "Graphic Design",
+   "name": "Single",
+   "unit": "Per design",
+   "amount": 10000
+  },
+  {
+   "id": "graphic-design--bundle-5",
+   "group": "Graphic Design",
+   "name": "Bundle 5",
+   "unit": "5 designs",
+   "amount": 45000
+  },
+  {
+   "id": "graphic-design--bundle-10",
+   "group": "Graphic Design",
+   "name": "Bundle 10",
+   "unit": "10 designs",
+   "amount": 85000
+  },
+  {
+   "id": "graphic-design--monthly-content",
+   "group": "Graphic Design",
+   "name": "Monthly content",
+   "unit": "Per month · 20 designs",
+   "amount": 170000
+  },
+  {
+   "id": "graphic-design--basic-logo",
+   "group": "Graphic Design",
+   "name": "Basic logo",
+   "unit": "One concept",
+   "amount": 25000
+  },
+  {
+   "id": "graphic-design--standard-logo",
+   "group": "Graphic Design",
+   "name": "Standard logo",
+   "unit": "Three concepts",
+   "amount": 60000
+  },
+  {
+   "id": "graphic-design--one-night",
+   "group": "Graphic Design",
+   "name": "One Night",
+   "unit": "Per event",
+   "amount": 35000
+  },
+  {
+   "id": "graphic-design--big-night",
+   "group": "Graphic Design",
+   "name": "Big Night",
+   "unit": "Per event",
+   "amount": 90000
+  },
+  {
+   "id": "graphic-design--mega-night",
+   "group": "Graphic Design",
+   "name": "Mega Night",
+   "unit": "Per event",
+   "amount": 250000
+  },
+  {
+   "id": "video-editing--starter",
+   "group": "Video Editing",
+   "name": "Starter",
+   "unit": "Per month",
+   "amount": 150000
+  },
+  {
+   "id": "video-editing--growth",
+   "group": "Video Editing",
+   "name": "Growth",
+   "unit": "Per month",
+   "amount": 300000
+  },
+  {
+   "id": "video-editing--campaign",
+   "group": "Video Editing",
+   "name": "Campaign",
+   "unit": "Per month",
+   "amount": 550000
+  },
+  {
+   "id": "photography--mini",
+   "group": "Photography",
+   "name": "Mini",
+   "unit": "30 minutes",
+   "amount": 25000
+  },
+  {
+   "id": "photography--classic",
+   "group": "Photography",
+   "name": "Classic",
+   "unit": "1 hour",
+   "amount": 45000
+  },
+  {
+   "id": "photography--signature",
+   "group": "Photography",
+   "name": "Signature",
+   "unit": "2 hours",
+   "amount": 80000
+  },
+  {
+   "id": "photography--essential",
+   "group": "Photography",
+   "name": "Essential",
+   "unit": "Up to 3 hours",
+   "amount": 80000
+  },
+  {
+   "id": "photography--standard",
+   "group": "Photography",
+   "name": "Standard",
+   "unit": "Up to 6 hours",
+   "amount": 150000
+  },
+  {
+   "id": "photography--full-day",
+   "group": "Photography",
+   "name": "Full day",
+   "unit": "Up to 10 hours",
+   "amount": 250000
+  },
+  {
+   "id": "weddings--basic",
+   "group": "Weddings",
+   "name": "Basic",
+   "unit": "Up to 5 hours",
+   "amount": 150000
+  },
+  {
+   "id": "weddings--premium",
+   "group": "Weddings",
+   "name": "Premium",
+   "unit": "Up to 8 hours",
+   "amount": 350000
+  },
+  {
+   "id": "weddings--gold",
+   "group": "Weddings",
+   "name": "Gold",
+   "unit": "Full day",
+   "amount": 700000
+  },
+  {
+   "id": "weddings--diamond",
+   "group": "Weddings",
+   "name": "Diamond",
+   "unit": "Full day + preparations",
+   "amount": 1200000
+  },
+  {
+   "id": "wedding-stationery--digital-suite",
+   "group": "Wedding stationery",
+   "name": "Digital suite",
+   "unit": "For WhatsApp and Instagram",
+   "amount": 45000
+  },
+  {
+   "id": "wedding-stationery--classic-suite",
+   "group": "Wedding stationery",
+   "name": "Classic suite",
+   "unit": "Print and digital",
+   "amount": 95000
+  },
+  {
+   "id": "wedding-stationery--luxury-suite",
+   "group": "Wedding stationery",
+   "name": "Luxury suite",
+   "unit": "Full wedding identity",
+   "amount": 180000
+  },
+  {
+   "id": "church-media--basic",
+   "group": "Church Media",
+   "name": "Basic",
+   "unit": "Per month",
+   "amount": 100000
+  },
+  {
+   "id": "church-media--premium",
+   "group": "Church Media",
+   "name": "Premium",
+   "unit": "Per month",
+   "amount": 250000
+  },
+  {
+   "id": "church-media--gold",
+   "group": "Church Media",
+   "name": "Gold",
+   "unit": "Per month",
+   "amount": 500000
+  },
+  {
+   "id": "frames--border--8x10",
+   "group": "Frames & Prints",
+   "name": "Border frame 8x10\"",
+   "unit": "",
+   "amount": 8000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--8x10",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 8x10\"",
+   "unit": "",
+   "amount": 10000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--8x10",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 8x10\"",
+   "unit": "",
+   "amount": 15000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--10x12",
+   "group": "Frames & Prints",
+   "name": "Border frame 10x12\"",
+   "unit": "",
+   "amount": 10000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--10x12",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 10x12\"",
+   "unit": "",
+   "amount": 15000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--10x12",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 10x12\"",
+   "unit": "",
+   "amount": 20000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--12x16",
+   "group": "Frames & Prints",
+   "name": "Border frame 12x16\"",
+   "unit": "",
+   "amount": 17000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--12x16",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 12x16\"",
+   "unit": "",
+   "amount": 20000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--12x16",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 12x16\"",
+   "unit": "",
+   "amount": 25000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--16x20",
+   "group": "Frames & Prints",
+   "name": "Border frame 16x20\"",
+   "unit": "",
+   "amount": 20000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--16x20",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 16x20\"",
+   "unit": "",
+   "amount": 25000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--16x20",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 16x20\"",
+   "unit": "",
+   "amount": 40000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--20x24",
+   "group": "Frames & Prints",
+   "name": "Border frame 20x24\"",
+   "unit": "",
+   "amount": 30000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--20x24",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 20x24\"",
+   "unit": "",
+   "amount": 35000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--20x24",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 20x24\"",
+   "unit": "",
+   "amount": 50000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--24x30",
+   "group": "Frames & Prints",
+   "name": "Border frame 24x30\"",
+   "unit": "",
+   "amount": 40000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--24x30",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 24x30\"",
+   "unit": "",
+   "amount": 45000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--24x30",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 24x30\"",
+   "unit": "",
+   "amount": 60000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--30x34",
+   "group": "Frames & Prints",
+   "name": "Border frame 30x34\"",
+   "unit": "",
+   "amount": 50000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--30x34",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 30x34\"",
+   "unit": "",
+   "amount": 55000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--30x34",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 30x34\"",
+   "unit": "",
+   "amount": 70000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--34x40",
+   "group": "Frames & Prints",
+   "name": "Border frame 34x40\"",
+   "unit": "",
+   "amount": 70000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--34x40",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 34x40\"",
+   "unit": "",
+   "amount": 75000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--34x40",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 34x40\"",
+   "unit": "",
+   "amount": 90000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--40x50",
+   "group": "Frames & Prints",
+   "name": "Border frame 40x50\"",
+   "unit": "",
+   "amount": 90000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--40x50",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 40x50\"",
+   "unit": "",
+   "amount": 95000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--40x50",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 40x50\"",
+   "unit": "",
+   "amount": 150000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--5x7ft",
+   "group": "Frames & Prints",
+   "name": "Border frame 5x7ft",
+   "unit": "",
+   "amount": 150000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--5x7ft",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 5x7ft",
+   "unit": "",
+   "amount": 170000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--5x7ft",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 5x7ft",
+   "unit": "",
+   "amount": 200000,
+   "qty": true
+  },
+  {
+   "id": "frames--border--7x9ft",
+   "group": "Frames & Prints",
+   "name": "Border frame 7x9ft",
+   "unit": "",
+   "amount": 190000,
+   "qty": true
+  },
+  {
+   "id": "frames--borderless--7x9ft",
+   "group": "Frames & Prints",
+   "name": "Borderless frame 7x9ft",
+   "unit": "",
+   "amount": 200000,
+   "qty": true
+  },
+  {
+   "id": "frames--acrylic--7x9ft",
+   "group": "Frames & Prints",
+   "name": "Acrylic frame 7x9ft",
+   "unit": "",
+   "amount": 250000,
+   "qty": true
+  }
+ ]
+}
