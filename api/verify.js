@@ -27,16 +27,23 @@ module.exports = async (req, res) => {
     label = "Quote or deposit";
   }
 
-  let body;
+  let body, httpStatus;
   try {
     const r = await fetch(`https://api.flutterwave.com/v3/transactions/${id}/verify`, {
       headers: { Authorization: `Bearer ${secret}`, Accept: "application/json" },
     });
+    httpStatus = r.status;
     body = await r.json();
   } catch (e) {
     return res.status(502).json({ ok: false, reason: "lookup_failed" });
   }
-  if (!body || body.status !== "success" || !body.data) return res.status(502).json({ ok: false, reason: "lookup_failed" });
+  // Flutterwave refused the key (wrong, test-mode or revoked): a set-up problem on our side,
+  // so the pay page tells the customer the payment was sent and will be confirmed by hand.
+  if (httpStatus === 401 || httpStatus === 403) return res.status(503).json({ ok: false, reason: "key_rejected" });
+  if (!body || body.status !== "success" || !body.data) {
+    const notFound = /no transaction/i.test(String((body && body.message) || ""));
+    return res.status(502).json({ ok: false, reason: notFound ? "not_found" : "lookup_failed" });
+  }
 
   const t = body.data;
   const checks = {
