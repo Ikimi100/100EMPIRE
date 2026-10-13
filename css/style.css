@@ -937,3 +937,31 @@ h1.hero-title .hero-line:first-child { font-size: clamp(3rem, 7.2vw, 8.4rem); }
 .pay-steps li::before { content: counter(ps, decimal-leading-zero); position: absolute; left: 0; top: .9rem; font-family: var(--font-display); font-weight: 700; color: var(--accent); }
 .pay-steps b { display: block; color: var(--color-ink); font-family: var(--font-display); text-transform: uppercase; font-size: .95rem; margin-bottom: .15rem; }
 @media (max-width: 560px) { .pay-mode { grid-template-columns: minmax(0, 1fr); } .pay-receipt > div { grid-template-columns: minmax(0, 1fr); gap: .15rem; } }
+
+/* ---------- Policy pages ---------- */
+.legal-grid { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 46rem); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+.legal-aside { position: sticky; top: calc(var(--header-h) + 1.5rem); display: grid; gap: 1.25rem; }
+.legal-updated { font-size: .82rem; color: var(--color-muted); }
+.legal-toc, .legal-more { display: grid; gap: .45rem; font-size: .92rem; }
+.legal-toc { list-style: decimal inside; color: var(--color-muted); }
+.legal-toc a { color: var(--color-muted); } .legal-toc a:hover { color: var(--accent); }
+.legal-sec { padding-block: 1.6rem; border-top: 1px solid var(--color-line); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.legal-sec:first-child { border-top: 0; padding-top: 0; }
+.legal-sec h2 { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: clamp(1.15rem, 2vw, 1.45rem); letter-spacing: -.01em; margin-bottom: .7rem; }
+.legal-sec p { color: rgba(244, 241, 234, .82); max-width: 66ch; }
+.legal-sec p + p { margin-top: .75rem; }
+.legal-list { display: grid; gap: .8rem; }
+.legal-list li { position: relative; padding-left: 1.1rem; color: rgba(244, 241, 234, .82); }
+.legal-list li::before { content: ""; position: absolute; left: 0; top: .7em; width: 6px; height: 6px; background: var(--accent); }
+.legal-list b { color: var(--color-ink); }
+.legal-note { margin-top: 2rem; padding: 1rem 1.2rem; border-left: 2px solid var(--accent); background: var(--color-bg-raised); color: var(--color-muted); }
+.footer-legal a { white-space: nowrap; }
+@media (max-width: 860px) { .legal-grid { grid-template-columns: minmax(0, 1fr); } .legal-aside { position: static; } .legal-toc { display: none; } .legal-aside nav .footer-label { display: none; } }
+
+/* ---------- Payment link maker ---------- */
+.pl-out { display: grid; gap: .35rem; padding: 1rem 1.1rem; border: 1px dashed var(--color-line); background: var(--color-bg-raised); }
+.pl-out-label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-muted); }
+.pl-link { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85rem; color: var(--accent); overflow-wrap: anywhere; }
+.pl-msg { font-size: .9rem; color: var(--color-ink); white-space: pre-wrap; margin-bottom: .2rem; }
+.pay-form a.is-off { opacity: .45; pointer-events: none; }
+.paylink-form.is-quote .pay-package { display: none; }
