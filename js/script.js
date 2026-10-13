@@ -92,17 +92,33 @@
   function light(key) {
     panels.forEach(function (p) { p.classList.toggle("is-lit", p.getAttribute("data-key") === key); });
   }
+  // The collage plays through the five disciplines once, then rests on the first.
+  // It waits until the page has loaded and only plays while it is on screen.
+  var played = 0, finished = false, onScreen = true, loaded = d.readyState === "complete";
   function step() {
     if (!panels.length) return;
     tick = (tick + 1) % panels.length;
+    played++;
     light(panels[tick].getAttribute("data-key"));
     roles.forEach(function (r, i) { r.classList.toggle("is-on", i === tick % roles.length); });
+    if (played >= panels.length) { stop(); finished = true; }
   }
-  function start() { if (!reduce && !timer && panels.length) timer = setInterval(step, 2600); }
+  function start() {
+    if (reduce || timer || !panels.length || pinned || finished || !onScreen || !loaded || d.hidden) return;
+    timer = setInterval(step, 2600);
+  }
   function stop() { clearInterval(timer); timer = null; }
   if (panels.length) {
     roles.forEach(function (r, i) { r.classList.toggle("is-on", i === 0); });
-    start();
+    light(panels[0].getAttribute("data-key"));
+    if (!loaded) window.addEventListener("load", function () { loaded = true; setTimeout(start, 1200); });
+    else setTimeout(start, 1200);
+    if ("IntersectionObserver" in window && collage) {
+      new IntersectionObserver(function (en) {
+        onScreen = en[0].isIntersecting;
+        if (onScreen) start(); else stop();
+      }).observe(collage);
+    }
     if (collage) {
       collage.addEventListener("mouseover", function (e) {
         var p = e.target.closest && e.target.closest(".hc-panel");
@@ -111,11 +127,17 @@
         tick = panels.indexOf(p);
         light(p.getAttribute("data-key"));
       });
-      collage.addEventListener("mouseleave", function () { if (!pinned) start(); });
+      collage.addEventListener("mouseleave", function () { start(); });
     }
-    d.addEventListener("visibilitychange", function () { if (d.hidden) stop(); else if (!pinned) start(); });
+    d.addEventListener("visibilitychange", function () { if (d.hidden) stop(); else start(); });
   } else if (roles.length) {
     roles.forEach(function (r) { r.classList.add("is-on"); });
+  }
+
+  // The service ticker only moves while it is on screen
+  var tk = $(".ticker");
+  if (tk && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { tk.classList.toggle("is-off", !en[0].isIntersecting); }).observe(tk);
   }
 
   /* ------------------------------------------------------------------

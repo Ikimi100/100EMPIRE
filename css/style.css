@@ -159,7 +159,7 @@ i { font-style: normal; }
 .idea input:focus { outline: none; border-bottom-color: var(--accent); }
 .idea button { flex-shrink: 0; display: inline-flex; align-items: center; gap: .45rem; background: var(--accent); color: var(--accent-ink); font-family: var(--font-display); font-weight: 700; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; padding: 0 1rem; border-radius: var(--radius); transition: background .25s, color .25s; }
 .idea button:hover { background: var(--color-ink); }
-.idea-hint { margin-top: .55rem; font-size: .8rem; color: #77766f; }
+.idea-hint { margin-top: .55rem; font-size: .8rem; color: var(--color-muted); }
 @media (max-width: 520px) { .idea-row { flex-direction: column; } .idea button { min-height: 48px; justify-content: center; } }
 
 /* collage */
@@ -384,6 +384,7 @@ a.work-card-link:hover, .work-card-link:hover { border-color: var(--accent); tra
 .footer-contact p { color: var(--color-muted); font-size: .95rem; margin-top: .5rem; }
 .footer-social { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-top: 1rem; }
 .footer-bottom { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; padding-block: 1.5rem calc(1.5rem + var(--safe-b)); border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: .86rem; }
+.footer-bottom a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .footer-bottom a:hover { color: var(--accent); }
 @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: minmax(0, 1fr); } .footer-bottom { padding-bottom: calc(5.5rem + var(--safe-b)); } }
@@ -706,7 +707,7 @@ details[open] > .e-more-btn .when-closed, details:not([open]) > .e-more-btn .whe
 .ticker-track > div { display: flex; align-items: center; flex-shrink: 0; }
 .ticker span { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.1rem, 2.2vw, 1.6rem); text-transform: uppercase; letter-spacing: -.01em; white-space: nowrap; padding-inline: 1.4rem; }
 .ticker i { color: var(--accent); font-size: .9rem; }
-.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker:hover .ticker-track, .ticker.is-off .ticker-track { animation-play-state: paused; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
 /* ---------- Work extras ---------- */
