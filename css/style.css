@@ -1098,3 +1098,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 .wordmark--badge { display: inline-flex; align-items: center; gap: .65rem; }
 .wordmark-badge { display: block; width: 46px; height: auto; flex: none; }
 @media (max-width: 760px) { .wordmark--badge { gap: .5rem; } .wordmark-badge { width: 38px; } }
+
+/* ---------- v11: social links ---------- */
+.footer-social a, .contact-social a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.contact-social { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
