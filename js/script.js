@@ -384,6 +384,72 @@
   }
 
   /* ------------------------------------------------------------------
+     10b. DESIGN VIEWER — links marked data-lb open the design larger.
+          Without JavaScript the link simply opens the image file.
+  ------------------------------------------------------------------ */
+  var lbLinks = $$("a[data-lb]");
+  if (lbLinks.length && window.HTMLDialogElement) {
+    var ICON = { close: '<path d="M6 6l12 12M18 6L6 18"/>', prev: '<path d="M15 5l-7 7 7 7"/>', next: '<path d="M9 5l7 7-7 7"/>' };
+    var svg = function (k) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[k] + "</svg>"; };
+    var dlg = d.createElement("dialog");
+    dlg.className = "lb";
+    dlg.setAttribute("aria-label", "Design viewer");
+    dlg.innerHTML = '<div class="lb-top"><p class="lb-count" aria-live="polite"></p>' +
+      '<button type="button" class="lb-btn lb-close" aria-label="Close">' + svg("close") + "</button></div>" +
+      '<div class="lb-stage"><img class="lb-img" alt="">' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="Previous design">' + svg("prev") + "</button>" +
+      '<button type="button" class="lb-btn lb-next" aria-label="Next design">' + svg("next") + "</button></div>" +
+      '<p class="lb-cap"></p>';
+    d.body.appendChild(dlg);
+    var lbImg = $(".lb-img", dlg), lbCap = $(".lb-cap", dlg), lbCount = $(".lb-count", dlg);
+    var group = [], idx = 0, opener = null;
+    var show = function (i) {
+      idx = (i + group.length) % group.length;
+      var a = group[idx], img = $("img", a);
+      lbImg.src = a.getAttribute("href");
+      lbImg.alt = img ? img.alt : "";
+      lbImg.width = +a.getAttribute("data-lb-w") || 0;
+      lbImg.height = +a.getAttribute("data-lb-h") || 0;
+      lbCap.textContent = a.getAttribute("data-lb-caption") || "";
+      lbCount.textContent = (idx + 1) + " of " + group.length;
+      [1, -1].forEach(function (s) { var n = group[(idx + s + group.length) % group.length]; if (n) { var p = new Image(); p.src = n.getAttribute("href"); } });
+    };
+    var close = function () { if (dlg.open) dlg.close(); };
+    dlg.addEventListener("close", function () { root.classList.remove("lb-open"); lbImg.removeAttribute("src"); if (opener) opener.focus(); });
+    $(".lb-close", dlg).addEventListener("click", close);
+    $(".lb-prev", dlg).addEventListener("click", function () { show(idx - 1); });
+    $(".lb-next", dlg).addEventListener("click", function () { show(idx + 1); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg || e.target.classList.contains("lb-stage")) close(); });
+    dlg.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
+    });
+    var tx = null;
+    dlg.addEventListener("touchstart", function (e) { tx = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+    dlg.addEventListener("touchend", function (e) {
+      if (tx === null) return;
+      var dx = e.changedTouches[0].clientX - tx; tx = null;
+      if (Math.abs(dx) > 45) show(idx + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    lbLinks.forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+        e.preventDefault();
+        opener = a;
+        group = lbLinks.filter(function (x) { return x.getAttribute("data-lb") === a.getAttribute("data-lb"); });
+        show(group.indexOf(a));
+        root.classList.add("lb-open");
+        dlg.showModal();
+        $(".lb-close", dlg).focus();
+      });
+    });
+  }
+
+  /* only one video plays at a time */
+  var vids = $$(".mv video");
+  vids.forEach(function (v) { v.addEventListener("play", function () { vids.forEach(function (o) { if (o !== v) o.pause(); }); }); });
+
+  /* ------------------------------------------------------------------
      11. FOOTER YEAR
   ------------------------------------------------------------------ */
   $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
