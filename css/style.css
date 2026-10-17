@@ -1093,3 +1093,8 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .lb-img { max-height: calc(100dvh - 12rem); }
   .lb-cap { padding-bottom: 4.75rem; }
 }
+
+/* ---------- v10: badge beside the name in the top menu ---------- */
+.wordmark--badge { display: inline-flex; align-items: center; gap: .65rem; }
+.wordmark-badge { display: block; width: 46px; height: auto; flex: none; }
+@media (max-width: 760px) { .wordmark--badge { gap: .5rem; } .wordmark-badge { width: 38px; } }
