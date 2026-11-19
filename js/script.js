@@ -228,6 +228,10 @@
       var v = input.value.trim();
       if (v.length < 3) { input.focus(); hint.innerHTML = "Type your idea first, even a few words."; return; }
       var m = matchIdea(v);
+      if (window.ENQ && window.ENQ.open) {
+        window.ENQ.open({ page: m ? m.h : "", notes: "I want to make: " + v, trigger: input });
+        return;
+      }
       var msg = "Hello 100EMPIRE, I want to make: " + v + (m ? "\n(It sounds like " + m.n + ".)" : "") + "\nCan we talk about it?";
       window.open(waLink(msg), "_blank", "noopener");
       hint.innerHTML = "WhatsApp is opening with your idea. Press send there and I will reply.";

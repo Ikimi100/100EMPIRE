@@ -1208,3 +1208,11 @@ html.qd-open { overflow: hidden; }
   .qd .contact-form { padding: 1.1rem 1rem 2rem; }
   .qd-chip span { padding: .5rem .7rem; font-size: .84rem; }
 }
+
+/* ---------- v15: site-wide enquiry form ---------- */
+.eq-intro { margin-top: -.3rem; font-size: .92rem; line-height: 1.5; color: var(--color-muted); }
+.eq-direct { color: var(--accent); white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+.eq-ref { padding: .7rem .9rem; font-size: .9rem; border-left: 3px solid var(--accent); background: var(--color-bg-raised); color: var(--color-ink); }
+.qd .eq-wide { grid-column: 1 / -1; }
+.qd select optgroup { font-style: normal; font-weight: 700; color: var(--color-muted); background: var(--color-bg-raised); }
+@media (max-width: 640px) { .eq-direct { white-space: normal; } }
