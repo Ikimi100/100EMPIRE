@@ -44,10 +44,15 @@
   }
 
   /* Current page in the menu (a service page also marks Services) */
-  var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-  if (here.indexOf(".") === -1) here = (here || "index") + ".html";
+  function pageKey(path) {
+    var k = (path || "").split(/[?#]/)[0].replace(/\/+$/, "").split("/").pop().toLowerCase().replace(/\.html$/, "");
+    return k || "index";
+  }
+  var here = pageKey(location.pathname);
   $$(".nav-link, .sub-link").forEach(function (a) {
-    if ((a.getAttribute("href") || "").toLowerCase() === here) a.setAttribute("aria-current", "page");
+    var h = a.getAttribute("href") || "";
+    if (h.charAt(0) === "#" || /^[a-z]+:/i.test(h)) return;
+    if (pageKey(h) === here) a.setAttribute("aria-current", "page");
   });
   if ($(".sub-link[aria-current]")) {
     var sl = $('.has-sub > .nav-link');
@@ -175,19 +180,19 @@
         then hands it to WhatsApp
   ------------------------------------------------------------------ */
   var IDEAS = [
-    { k: ["wedding", "bride", "groom", "marriage", "engagement", "introduction", "traditional"], p: "story", n: "Weddings", h: "weddings.html" },
-    { k: ["church", "sermon", "ministry", "worship", "livestream", "live stream", "gospel", "pastor", "crusade"], p: "motion", n: "Church media", h: "church-media.html" },
-    { k: ["logo", "brand", "flyer", "poster", "banner", "card", "packag", "label", "design", "identity", "invitation", "invite", "billboard", "sticker", "menu", "cover"], p: "design", n: "Visual design", h: "graphic-design.html" },
-    { k: ["frame", "print", "canvas", "acrylic"], p: "design", n: "Frames and prints", h: "frames.html" },
-    { k: ["video", "film", "reel", "edit", "youtube", "tiktok", "documentary", "music video", "motion", "animation", "trailer", "vlog", "shorts", "clip"], p: "motion", n: "Film and motion", h: "video-editing.html" },
-    { k: ["podcast", "audio", "sound", "voice", "jingle", "mix", "song", "music"], p: "sound", n: "Audio and sound", h: "video-editing.html" },
-    { k: ["app", "android", "ios", "dashboard", "portal"], p: "code", n: "App development", h: "app-development.html" },
-    { k: ["website", "web", "site", "landing", "online store", "e-commerce", "ecommerce", "blog"], p: "code", n: "Web design", h: "web-design.html" },
-    { k: ["social", "instagram", "facebook", "ads", "advert", "campaign", "marketing", "followers", "content"], p: "code", n: "Social media and campaigns", h: "digital-marketing.html" },
-    { k: ["photo", "shoot", "portrait", "headshot", "picture", "birthday", "graduation"], p: "story", n: "Photography", h: "photography.html" },
-    { k: ["book", "write", "writing", "novel", "ghost", "poem", "poetry", "story", "script", "manuscript", "author"], p: "story", n: "Books and writing", h: "book-writing.html" },
-    { k: ["class", "course", "learn", "train", "teach", "academy", "lesson", "importation"], p: "code", n: "the Academy", h: "academy.html" },
-    { k: ["dog", "puppy", "puppies", "pet"], p: null, n: "Dogs and puppies", h: "dogs.html" }
+    { k: ["wedding", "bride", "groom", "marriage", "engagement", "introduction", "traditional"], p: "story", n: "Weddings", h: "/weddings" },
+    { k: ["church", "sermon", "ministry", "worship", "livestream", "live stream", "gospel", "pastor", "crusade"], p: "motion", n: "Church media", h: "/church-media" },
+    { k: ["logo", "brand", "flyer", "poster", "banner", "card", "packag", "label", "design", "identity", "invitation", "invite", "billboard", "sticker", "menu", "cover"], p: "design", n: "Visual design", h: "/graphic-design" },
+    { k: ["frame", "print", "canvas", "acrylic"], p: "design", n: "Frames and prints", h: "/frames" },
+    { k: ["video", "film", "reel", "edit", "youtube", "tiktok", "documentary", "music video", "motion", "animation", "trailer", "vlog", "shorts", "clip"], p: "motion", n: "Film and motion", h: "/video-editing" },
+    { k: ["podcast", "audio", "sound", "voice", "jingle", "mix", "song", "music"], p: "sound", n: "Audio and sound", h: "/video-editing" },
+    { k: ["app", "android", "ios", "dashboard", "portal"], p: "code", n: "App development", h: "/app-development" },
+    { k: ["website", "web", "site", "landing", "online store", "e-commerce", "ecommerce", "blog"], p: "code", n: "Web design", h: "/web-design" },
+    { k: ["social", "instagram", "facebook", "ads", "advert", "campaign", "marketing", "followers", "content"], p: "code", n: "Social media and campaigns", h: "/digital-marketing" },
+    { k: ["photo", "shoot", "portrait", "headshot", "picture", "birthday", "graduation"], p: "story", n: "Photography", h: "/photography" },
+    { k: ["book", "write", "writing", "novel", "ghost", "poem", "poetry", "story", "script", "manuscript", "author"], p: "story", n: "Books and writing", h: "/book-writing" },
+    { k: ["class", "course", "learn", "train", "teach", "academy", "lesson", "importation"], p: "code", n: "the Academy", h: "/academy" },
+    { k: ["dog", "puppy", "puppies", "pet"], p: null, n: "Dogs and puppies", h: "/dogs" }
   ];
   function matchIdea(text) {
     var t = " " + text.toLowerCase().replace(/[^a-z0-9\- ]+/g, " ");
@@ -374,7 +379,7 @@
       total.textContent = naira(price * q);
       order.href = waLink("Hello 100EMPIRE, I would like to order " + q + " x " + names[type] + " (" + row.size + "). Estimate: " + naira(price * q) + ".");
       var fpay = $("#f-pay", est);
-      if (fpay) fpay.href = "pay.html?item=frames--" + type + "--" + row.size.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "&qty=" + q;
+      if (fpay) fpay.href = "/pay?item=frames--" + type + "--" + row.size.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "&qty=" + q;
       typeBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-ftype") === type)); });
     };
     typeBtns.forEach(function (b) { b.addEventListener("click", function () { type = b.getAttribute("data-ftype"); render(); }); });

@@ -1,4 +1,4 @@
-/* 100EMPIRE — paylink.js: builds pay.html links and a WhatsApp message for a customer. */
+/* 100EMPIRE — paylink.js: builds /pay links and a WhatsApp message for a customer. */
 (function () {
   "use strict";
   var form = document.querySelector("[data-paylink]");
@@ -29,12 +29,12 @@
     if (m === "quote") {
       total = amountOf(f("amount").value);
       what = f("for").value.trim();
-      if (total >= 1000 && what.length >= 3) url = site + "/pay.html?amount=" + total + "&for=" + encodeURIComponent(what);
+      if (total >= 1000 && what.length >= 3) url = site + "/pay?amount=" + total + "&for=" + encodeURIComponent(what);
     } else if (o) {
       var q = o.hasAttribute("data-qty") ? Math.min(500, Math.max(1, parseInt(f("qty").value, 10) || 1)) : 1;
       total = Number(o.getAttribute("data-amount")) * q;
       what = (q > 1 ? q + " x " : "") + o.getAttribute("data-label");
-      url = site + "/pay.html?item=" + encodeURIComponent(o.value) + (q > 1 ? "&qty=" + q : "");
+      url = site + "/pay?item=" + encodeURIComponent(o.value) + (q > 1 ? "&qty=" + q : "");
     }
     current = url;
     if (!url) {

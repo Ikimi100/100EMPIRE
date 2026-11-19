@@ -160,7 +160,7 @@
     });
   });
 
-  // Links like pay.html?item=graphic-design--single or pay.html?amount=50000&for=Logo%20deposit
+  // Links like /pay?item=graphic-design--single or /pay?amount=50000&for=Logo%20deposit
   try {
     var p = new URLSearchParams(location.search);
     if (p.get("item")) {
