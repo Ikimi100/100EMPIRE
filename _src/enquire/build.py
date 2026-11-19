@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 os.chdir(ROOT)
-VERSION = '3'
+VERSION = '4'
 
 SERVICES = [
     ('graphic', 'Graphic design and branding', 'Package'),
@@ -88,6 +88,7 @@ FIELDS = [
     F('wd_cover', 'Coverage', o=['Photo only', 'Video only', 'Photo and video', 'Photo, video and drone', 'Photo, video, drone and livestream', 'Stationery only'], for_=['weddings']),
     F('wd_guests', 'Guests', o=['Under 100', '100–300', '300–600', 'Over 600'], for_=['weddings'], opt=True),
     # church
+    F('ch_note', 'Church Media is available in Abuja (FCT) only for now. Other locations are coming soon. Churches outside Abuja can still send this to join the waitlist.', 'note', for_=['church']),
     F('ch_need', 'What the church needs', o=['Monthly media support', 'Livestream setup', 'Sermon clips', 'Programme or event coverage', 'Flyers and designs',
       'Media team training', 'Something else'], for_=['church'], reqFor=['church'], err='Please choose what the church needs.'),
     F('ch_name', 'Church name', 'text', for_=['church'], opt=True),

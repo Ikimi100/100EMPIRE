@@ -24,6 +24,7 @@
     var req = (f.req ? " required" : "") + (canErr ? ' aria-describedby="' + id + '-err"' : "");
     var err = canErr ? '<p class="form-error" id="' + id + '-err" aria-live="polite"></p>' : "";
     var attrs = ' data-for="' + (f.for || []).join(" ") + '"' + (f.need ? ' data-need="' + f.need.join(" ") + '"' : "");
+    if (f.t === "note") return '<p class="eq-ref eq-wide"' + attrs + ">" + esc(f.l) + "</p>";
     var inner;
     if (f.t === "select") {
       inner = '<select id="' + id + '" name="' + f.n + '"' + req + '><option value="">' + esc(f.ph || "Choose one…") + "</option>" +

@@ -29,7 +29,8 @@
     if (m === "quote") {
       total = amountOf(f("amount").value);
       what = f("for").value.trim();
-      if (total >= 1000 && what.length >= 3) url = site + "/pay?amount=" + total + "&for=" + encodeURIComponent(what);
+      var sv = f("service").value;
+      if (total >= 1000 && what.length >= 3) url = site + "/pay?amount=" + total + "&for=" + encodeURIComponent(what) + (sv ? "&service=" + sv : "");
     } else if (o) {
       var q = o.hasAttribute("data-qty") ? Math.min(500, Math.max(1, parseInt(f("qty").value, 10) || 1)) : 1;
       total = Number(o.getAttribute("data-amount")) * q;
