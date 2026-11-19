@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 os.chdir(ROOT)
-VERSION = '2'
+VERSION = '3'
 
 SERVICES = [
     ('graphic', 'Graphic design and branding', 'Package'),

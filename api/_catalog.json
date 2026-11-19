@@ -181,21 +181,21 @@
    "group": "Church Media",
    "name": "Basic",
    "unit": "Per month",
-   "amount": 100000
+   "amount": 500000
   },
   {
    "id": "church-media--premium",
    "group": "Church Media",
    "name": "Premium",
    "unit": "Per month",
-   "amount": 250000
+   "amount": 1000000
   },
   {
    "id": "church-media--gold",
    "group": "Church Media",
    "name": "Gold",
    "unit": "Per month",
-   "amount": 500000
+   "amount": 1500000
   },
   {
    "id": "frames--border--8x10",
