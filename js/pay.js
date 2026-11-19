@@ -27,8 +27,8 @@
     "Edo", "Ekiti", "Enugu", "FCT (Abuja)", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi",
     "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba",
     "Yobe", "Zamfara", "Outside Nigeria"];
-  var OUTSIDE = "My church is outside Abuja";
-  var COUNCILS = ["Abuja Municipal (AMAC)", "Bwari", "Gwagwalada", "Kuje", "Kwali", "Abaji", OUTSIDE];
+  var OUTSIDE = "My church is outside Abuja and Suleja", SULEJA = "Suleja (Niger State, next to Abuja)";
+  var COUNCILS = ["Abuja Municipal (AMAC)", "Bwari", "Gwagwalada", "Kuje", "Kwali", "Abaji", SULEJA, OUTSIDE];
   var DELIVER = "Deliver to my address";
 
   function F(n, l, t, o, x) { var f = { n: n, l: l, t: t || "text" }; if (o) f.o = o; for (var k in x) f[k] = x[k]; return f; }
@@ -156,8 +156,8 @@
   /* ---------- details section ---------- */
   function locFields(cfg) {
     if (cfg.loc === "abuja") return [
-      F("d_council", "Area council (Abuja, FCT)", "select", COUNCILS, { req: true, ph: "Choose the area council…" }),
-      F("d_town", "District or area", "text", null, { req: true, ph: "e.g. Utako, Gwarinpa, Kubwa, Lugbe" }),
+      F("d_council", "Area council (Abuja) or Suleja", "select", COUNCILS, { req: true, ph: "Choose one…" }),
+      F("d_town", "District or area", "text", null, { req: true, ph: "e.g. Utako, Gwarinpa, Kubwa, Kwata" }),
       F("d_address", cfg.addr, "text", null, { req: true, wide: true, ph: "Street, building and nearest landmark", ac: "street-address" })];
     return [
       F("d_state", "State", "select", STATES, { req: true, ph: "Choose your state…" }),
@@ -195,13 +195,13 @@
     if (!cfg) { detailsEl.innerHTML = ""; return; }
     var h = '<p class="pay-sec-h">' + esc(cfg.title) + "</p>";
     if (cfg.loc === "abuja") {
-      h += '<p class="pay-note"><b>Church Media is available in Abuja (FCT) only for now.</b> Other locations are coming soon.</p>';
+      h += '<p class="pay-note"><b>Church Media is available in Abuja (FCT) and Suleja only for now.</b> Other locations are coming soon.</p>';
     }
     h += '<div class="pay-grid">' + cfg.fields.map(fieldHTML).join("") + "</div>";
     h += '<p class="pay-sec-h">' + (cfg.loc === "abuja" ? "Church location" : cfg.loc === "onsite" ? "Venue location" :
       cfg.loc === "delivery" ? "Your location" : "Your location") + "</p>";
     h += '<div class="pay-grid">' + locFields(cfg).map(fieldHTML).join("") + "</div>";
-    h += '<p class="pay-note pay-note--warn" data-pay-outside hidden>Church Media is only available in Abuja (FCT) for now, so this plan can’t be paid for yet. ' +
+    h += '<p class="pay-note pay-note--warn" data-pay-outside hidden>Church Media is only available in Abuja (FCT) and Suleja for now, so this plan can’t be paid for yet. ' +
       '<a class="text-link" data-pay-waitlist data-direct href="#" target="_blank" rel="noopener">Join the waitlist on WhatsApp</a> and we will tell you when we reach your area.</p>';
     detailsEl.innerHTML = h;
     Object.keys(keep).forEach(function (n) { var el = field(n); if (el && el.closest("[data-pay-details]")) el.value = keep[n]; });
@@ -214,7 +214,7 @@
     if (box) {
       box.hidden = !outside;
       var wl = $("[data-pay-waitlist]");
-      if (wl) wl.href = waLink("Hello 100EMPIRE, my church" + (val("d_church") ? " (" + val("d_church") + ")" : "") + " is outside Abuja" +
+      if (wl) wl.href = waLink("Hello 100EMPIRE, my church" + (val("d_church") ? " (" + val("d_church") + ")" : "") + " is outside Abuja and Suleja" +
         (val("d_town") ? ", in " + val("d_town") : "") + ". Please add us to the Church Media waitlist and let me know when you reach our area.");
     }
     form.classList.toggle("is-blocked", outside);
@@ -262,7 +262,7 @@
       var need = f.req || (f.reqIf && val("d_get") === f.reqIf);
       var v = val(f.n), msg = "";
       if (need && !v) msg = f.t === "select" ? "Please choose one." : f.n === "d_address" ? "Enter the full address with a landmark." : "Please fill this in.";
-      if (f.n === "d_council" && v === OUTSIDE) msg = "Church Media is available in Abuja (FCT) only for now.";
+      if (f.n === "d_council" && v === OUTSIDE) msg = "Church Media is available in Abuja (FCT) and Suleja only for now.";
       if (f.t === "date" && v && v < new Date().toISOString().slice(0, 10)) msg = "Choose a date from today on.";
       if (!setError(f.n, msg)) bad.push(f.n);
     });
@@ -278,7 +278,7 @@
     var rows = [];
     if (cfg) {
       cfg.fields.forEach(function (f) { var v = val(f.n); if (v) rows.push([f.l, fmt(f, v)]); });
-      var place = cfg.loc === "abuja" ? [val("d_address"), val("d_town"), val("d_council"), "Abuja (FCT)"] : [val("d_address"), val("d_town"), val("d_state")];
+      var place = cfg.loc === "abuja" ? [val("d_address"), val("d_town"), val("d_council") === SULEJA ? "Suleja, Niger State" : val("d_council") + ", Abuja (FCT)"] : [val("d_address"), val("d_town"), val("d_state")];
       place = place.filter(Boolean).join(", ");
       if (place) rows.push([cfg.loc === "abuja" ? "Church address" : cfg.loc === "onsite" ? "Venue address" : "Address", place]);
     }
