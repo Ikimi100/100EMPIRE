@@ -1141,6 +1141,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 .dg-price b { font: 600 1rem/1.3 var(--sans); text-align: right; }
 .dg-ask { align-self: flex-start; font-weight: 600; font-size: .9rem; color: var(--accent); border-bottom: 1px solid transparent; }
 .dg-ask:hover { border-bottom-color: currentColor; }
+.dg-ask-short { display: none; }
 .e-svc .dg-ask { display: inline-block; margin-top: .7rem; }
 .dg-more { margin-top: clamp(2rem, 4vw, 3rem); grid-template-columns: minmax(0, 1fr); }
 .dg-more .e-rgroup-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
@@ -1168,7 +1169,9 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .dg-traits li + li { display: none; }
   .dg-price { flex-direction: column; align-items: flex-start; gap: .15rem; padding-top: .5rem; }
   .dg-price b { text-align: left; font-size: .86rem; line-height: 1.3; }
-  .dg-ask { font-size: .8rem; }
+  .dg-ask { font-size: .8rem; white-space: nowrap; }
+  .dg-ask-long { display: none; }
+  .dg-ask-short { display: inline; }
   .dg-more .e-rgroup-body { grid-template-columns: minmax(0, 1fr); }
   .dg-credits ul { columns: 1; }
   .vx thead { display: none; }
