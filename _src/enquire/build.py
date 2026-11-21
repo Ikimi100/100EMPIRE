@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 os.chdir(ROOT)
-VERSION = '5'
+VERSION = '6'
 
 SERVICES = [
     ('graphic', 'Graphic design and branding', 'Package'),
@@ -118,7 +118,7 @@ FIELDS = [
     F('bk_mat', 'What you have now', o=['A full draft', 'Notes or recordings', 'Just an idea'], for_=['books']),
     F('bk_when', 'When do you need it?', o=['Within a month', '1–3 months', '3–6 months', 'Flexible'], for_=['books']),
     # academy
-    F('ac_mode', 'How you want to learn', o=['In person in Suleja', 'Online', 'Either'], for_=['academy'], reqFor=['academy'], err='Please choose how you want to learn.'),
+    F('ac_mode', 'How you want to learn', o=['In person in Abuja (Utako)', 'Online', 'Either'], for_=['academy'], reqFor=['academy'], err='Please choose how you want to learn.'),
     F('ac_level', 'Your level', o=['Complete beginner', 'Some experience'], for_=['academy']),
     F('ac_start', 'When to start', o=['Next class', 'This month', 'Flexible'], for_=['academy']),
     F('ac_laptop', 'Do you have a laptop?', o=['Yes', 'No'], for_=['academy']),

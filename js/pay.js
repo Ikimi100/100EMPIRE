@@ -83,7 +83,7 @@
       F("d_social", "Social media pages", "text", null, { ph: "Facebook, Instagram, YouTube or TikTok names" }),
       F("d_equip", "Media equipment you already have", "textarea", null, { wide: true, ph: "Cameras, laptop, projector, mixer, livestream gear…" })] },
     frames: { name: "Frames and prints", title: "Pick-up or delivery", loc: "delivery", addr: "Delivery address", fields: [
-      F("d_get", "Pick-up or delivery", "select", ["Pick up at the studio (Hali Plaza, Kwata, Suleja)", DELIVER], R),
+      F("d_get", "Pick-up or delivery", "select", ["Pick up at the studio (Utako, Abuja)", DELIVER], R),
       F("d_picture", "Picture sent by", "select", ["WhatsApp", "Email", "Bring it to the studio"], R),
       F("d_needby", "Date you need it", "date"),
       F("d_wording", "Name or wording on the frame", "text", null, { wide: true })] },
@@ -357,7 +357,7 @@
     var box = d.createElement("div");
     box.id = "printReceipt";
     box.innerHTML = '<div class="pr-head"><b>100EMPIRE</b><span>Payment receipt</span></div>' + receiptHTML(ctx, ctx.lastStatus) +
-      '<p class="pr-foot">100EMPIRE · Hali Plaza, Kwata, Suleja · +234 703 993 4163 · ' + EMAIL + " · www.100empire.com<br>" +
+      '<p class="pr-foot">100EMPIRE · Utako, Abuja · +234 703 993 4163 · ' + EMAIL + " · www.100empire.com<br>" +
       "Paid online through Flutterwave. Flutterwave also emails its own receipt to " + esc(ctx.email) + ".</p>";
     d.body.appendChild(box);
     d.documentElement.classList.add("print-receipt");
