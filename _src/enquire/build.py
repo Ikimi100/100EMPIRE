@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 os.chdir(ROOT)
-VERSION = '6'
+VERSION = '7'
 
 SERVICES = [
     ('graphic', 'Graphic design and branding', 'Package'),
@@ -33,7 +33,9 @@ GROUPS = {'Weddings': 'weddings', 'Wedding stationery': 'weddings', 'Web Design'
           'Real estate websites': 'web', 'Church websites': 'web', 'Online stores': 'web', 'Church Media': 'church',
           'Graphic Design': 'graphic', 'Photography': 'photo', 'Video Editing': 'video', 'App Development': 'apps',
           'Books & Writing': 'books', 'Social Media & Campaigns': 'social'}
-PAGES = {'/graphic-design': 'graphic', '/video-editing': 'video', '/photography': 'photo', '/weddings': 'weddings',
+PAGES = {'/dog-prices-nigeria': 'dogs', '/puppy-vaccination-calculator': 'dogs', '/wedding-photography-prices-abuja': 'weddings',
+         '/wedding-budget-planner': 'weddings', '/website-cost-nigeria': 'web', '/picture-frame-prices-abuja': 'frames', '/frame-size-preview': 'frames',
+         '/graphic-design': 'graphic', '/video-editing': 'video', '/photography': 'photo', '/weddings': 'weddings',
          '/church-media': 'church', '/web-design': 'web', '/app-development': 'apps', '/digital-marketing': 'social',
          '/book-writing': 'books', '/academy': 'academy', '/frames': 'frames', '/dogs': 'dogs',
          '/unity-worship-centre': 'church', '/from-lead-to-deal': 'video', '/nursing-emigration-explainer': 'video',
