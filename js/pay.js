@@ -484,6 +484,16 @@
   } catch (e) { /* old browsers: no preselect */ }
   render();
 
+  /* Details carried over from a booking page (for example /book-social-media) */
+  try {
+    var pf = JSON.parse(sessionStorage.getItem("100e-pay-prefill") || "null");
+    if (pf && pf.f && Date.now() - (pf.at || 0) < 3600000) {
+      Object.keys(pf.f).forEach(function (k) { var el = field(k); if (el && pf.f[k] && !el.value) el.value = String(pf.f[k]); });
+      render();
+    }
+    sessionStorage.removeItem("100e-pay-prefill");
+  } catch (e) { /* private mode: nothing carried over */ }
+
   /* The public key comes from the page, or from Vercel's settings through /api/config */
   function ready(ok) { form.classList.toggle("is-setup", !ok); setup.hidden = ok; }
   if (publicKey) ready(true);

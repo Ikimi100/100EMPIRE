@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 os.chdir(ROOT)
-VERSION = '7'
+VERSION = '8'
 
 SERVICES = [
     ('graphic', 'Graphic design and branding', 'Package'),
@@ -33,7 +33,7 @@ GROUPS = {'Weddings': 'weddings', 'Wedding stationery': 'weddings', 'Web Design'
           'Real estate websites': 'web', 'Church websites': 'web', 'Online stores': 'web', 'Church Media': 'church',
           'Graphic Design': 'graphic', 'Photography': 'photo', 'Video Editing': 'video', 'App Development': 'apps',
           'Books & Writing': 'books', 'Social Media & Campaigns': 'social'}
-PAGES = {'/dog-prices-nigeria': 'dogs', '/puppy-vaccination-calculator': 'dogs', '/wedding-photography-prices-abuja': 'weddings',
+PAGES = {'/book-social-media': 'social', '/dog-prices-nigeria': 'dogs', '/puppy-vaccination-calculator': 'dogs', '/wedding-photography-prices-abuja': 'weddings',
          '/wedding-budget-planner': 'weddings', '/website-cost-nigeria': 'web', '/picture-frame-prices-abuja': 'frames', '/frame-size-preview': 'frames',
          '/graphic-design': 'graphic', '/video-editing': 'video', '/photography': 'photo', '/weddings': 'weddings',
          '/church-media': 'church', '/web-design': 'web', '/app-development': 'apps', '/digital-marketing': 'social',
@@ -198,6 +198,10 @@ def harvest_packages():
                 g = re.search(r'under (.+?)\. Please', msg)
                 grp = g.group(1) if g else ''
                 svc = GROUPS.get(grp)
+                if not svc and not g:
+                    # cards whose button goes to a booking page rather than WhatsApp: use the page's service
+                    svc = PAGES.get('/' + f[:-5])
+                    grp = 'Social Media & Campaigns' if svc == 'social' else ''
                 if not svc: continue
                 group_label = grp if grp not in ('Graphic Design', 'Photography', 'Church Media', 'Video Editing', 'App Development',
                                                  'Books & Writing', 'Social Media & Campaigns', 'Web Design', 'Weddings') else (sub[-1] if sub else (seclabel or grp))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the price guides, the free tools and their two hub pages.
+"""Builds the price guides, the free tools, their two hub pages and the social media booking page.
 
 Run from the repo root:  python3 _src/guides/build.py
 The page shell (head, header, footer) is taken from refunds.html, so menu and
@@ -611,4 +611,129 @@ hub("tools", "Free Tools: Puppy Vaccination, Wedding Budget, Frame Preview · 10
      ("Frames", "Frame size preview", "See your photo framed on a wall, to scale, with the price.", "/frame-size-preview", "Open the tool")],
     "tools")
 
-print("built:", ", ".join(u.rsplit("/", 1)[1] for u in [dog_url, w_url, web_url, fr_url, vax_url, bp_url, fp_url]) + ", guides, tools")
+
+# ============================================================ SOCIAL MEDIA BOOKING
+BOOK_JS = "/js/book-social.js?v=1"
+PLANS = [
+    ("starter", "Starter", 200000, 2, "Small businesses keeping pages active.", ["2 platforms of your choice", "12 designed posts a month", "Captions and scheduling", "Monthly report"], ""),
+    ("growth", "Growth", 400000, 3, "Brands ready to grow and sell.", ["3 platforms of your choice", "20 posts and 4 reels a month", "Community management", "Monthly strategy call", "Monthly report"], "Most popular"),
+    ("premium", "Premium", 800000, 4, "Brands that want full-service growth.", ["4 platforms of your choice", "30 posts and 8 reels a month", "Ads management included", "Monthly content shoot", "Weekly reports"], ""),
+]
+PLATS = [("facebook", "Facebook"), ("instagram", "Instagram"), ("tiktok", "TikTok"), ("youtube", "YouTube"), ("whatsapp", "WhatsApp"),
+         ("x", "X (Twitter)"), ("linkedin", "LinkedIn")]
+ADDS = [
+    ("ads", "Ads management", "₦100,000 – ₦300,000 a month", "Facebook, Instagram and TikTok ads. Ad spend is paid to the platform separately. Included in Premium."),
+    ("funnel", "Lead funnel", "₦400,000 – ₦1,000,000", "Ad, landing page and WhatsApp follow-up that turn clicks into enquiries."),
+    ("wabiz", "WhatsApp Business setup and catalogue", "₦60,000 – ₦120,000", ""),
+    ("wacomm", "WhatsApp Community setup and rollout", "₦100,000 – ₦300,000", "Admin structure, groups and phased migration."),
+    ("shoot", "Content shoot day", "₦160,000 – ₦400,000", "Photos and video of your products, team or events. Premium includes one a month."),
+    ("audit", "Social media audit", "₦80,000 – ₦160,000", "A review of your pages, competitors and results."),
+    ("podcast", "Podcast launch package", "₦300,000 – ₦1,000,000", "Format, branding, setup and first 4 episodes."),
+]
+EXTRA = 70000
+STATES_LIST = ["Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi",
+    "Edo", "Ekiti", "Enugu", "FCT (Abuja)", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi",
+    "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba",
+    "Yobe", "Zamfara", "Outside Nigeria"]
+
+
+def opts(items, ph):
+    return '<option value="">%s</option>' % esc(ph) + "".join("<option>%s</option>" % esc(o) for o in items)
+
+
+def fld(name, label, inner, req=True, wide=False):
+    return ('<div class="tl-f%s"><label for="bk-%s">%s%s</label>%s<p class="tl-err" data-err="%s" aria-live="polite"></p></div>'
+            % (" pay-wide" if wide else "", name, esc(label), "" if req else " <span>(optional)</span>", inner, name))
+
+
+def inp(name, typ="text", ph="", extra=""):
+    return '<input id="bk-%s" name="%s" type="%s"%s%s>' % (name, name, typ, (' placeholder="%s"' % esc(ph)) if ph else "", extra)
+
+
+def sel(name, items, ph="Choose one…"):
+    return '<select id="bk-%s" name="%s">%s</select>' % (name, name, opts(items, ph))
+
+
+plans_html = "".join(
+    '<label class="bk-plan"><input type="radio" name="plan" value="%s" data-price="%d" data-n="%d"%s>'
+    '<span class="bk-plan-in">%s<span class="bk-plan-top"><b>%s</b><em>%s<small> / month</small></em></span>'
+    '<span class="bk-plan-for">%s</span><ul>%s</ul></span></label>'
+    % (k, price, n_, " checked" if k == "growth" else "", ('<span class="bk-plan-tag">%s</span>' % tag) if tag else "", name, n(price), esc(forw),
+       "".join("<li>%s</li>" % esc(x) for x in feats))
+    for k, name, price, n_, forw, feats, tag in PLANS)
+chips = "".join('<label class="bk-chip"><input type="checkbox" name="plat" value="%s" data-label="%s"><span>%s<i data-tag></i></span></label>'
+                % (k, esc(l), esc(l)) for k, l in PLATS)
+adds = "".join('<label class="bk-add" data-add="%s"><input type="checkbox" name="add" value="%s"><span><b>%s</b><em>%s</em>%s</span></label>'
+               % (k, esc(l), esc(l), esc(pr), ("<small>%s</small>" % esc(note)) if note else "") for k, l, pr, note in ADDS)
+months = "".join('<label><input type="radio" name="months" value="%d"%s><span>%s</span></label>'
+                 % (m, " checked" if m == 3 else "", ("%d month" % m) if m == 1 else ("%d months" % m)) for m in (1, 3, 6, 12))
+
+BOOK_UI = (
+    '<form class="tl bk" data-book novalidate><div class="bk-steps">'
+    '<fieldset class="bk-step"><legend><span class="bk-n">1</span>Choose your plan</legend><div class="bk-plans">%s</div></fieldset>' % plans_html +
+    '<fieldset class="bk-step"><legend><span class="bk-n">2</span>Pick your platforms</legend>'
+    '<p class="tl-hint" data-plat-hint></p><div class="bk-chips">%s</div><p class="bk-count" data-plat-count aria-live="polite"></p>'
+    '<p class="tl-err" data-err="plat" aria-live="polite"></p><div class="bk-links" data-links></div></fieldset>' % chips +
+    '<fieldset class="bk-step"><legend><span class="bk-n">3</span>Add-ons <span>(optional)</span></legend>'
+    '<p class="tl-hint">Tick anything else you want. We confirm these prices with you; they are not part of the online payment.</p><div class="bk-adds">%s</div></fieldset>' % adds +
+    '<fieldset class="bk-step"><legend><span class="bk-n">4</span>About your brand</legend><div class="pay-grid">' +
+    fld("org", "Business, ministry or organisation name", inp("org", ph="e.g. Grace Homes Ltd", extra=' maxlength="80" autocomplete="organization"')) +
+    fld("kind", "Type", sel("kind", ["Business or brand", "Church or ministry", "Real estate", "NGO or foundation", "Political or civic movement", "Personal brand", "Other"])) +
+    fld("goal", "Main goal for the next 3 months", sel("goal", ["Grow followers and reach", "Get leads and enquiries", "Sell products or services", "Promote an event or launch",
+                                                              "Build an engaged community", "Campaign or advocacy"])) +
+    fld("budget", "Monthly ad budget", sel("budget", ["No ads for now", "Under ₦100,000", "₦100,000 – ₦300,000", "₦300,000 – ₦1,000,000", "Above ₦1,000,000", "Not sure yet"]), req=False) +
+    fld("start", "Start date", inp("start", "date")) +
+    fld("brand", "Logo and brand colours", sel("brand", ["I have a logo and brand colours", "I have a logo only", "I need branding too"]), req=False) +
+    fld("notes", "Anything else we should know", '<textarea id="bk-notes" name="notes" rows="3" maxlength="600" placeholder="Your audience, offers, events coming up, what you have tried before…"></textarea>', req=False, wide=True) +
+    "</div></fieldset>"
+    '<fieldset class="bk-step"><legend><span class="bk-n">5</span>How many months</legend><div class="tl-seg">%s</div>'
+    '<p class="tl-hint">Minimum 3 months recommended: consistent posting shows movement in the first month, and most clients judge results after three.</p></fieldset>' % months +
+    '<fieldset class="bk-step"><legend><span class="bk-n">6</span>Your details</legend><div class="pay-grid">' +
+    fld("name", "Your full name", inp("name", extra=' maxlength="80" autocomplete="name"')) +
+    fld("phone", "WhatsApp number", inp("phone", "tel", "0803 123 4567", ' inputmode="tel" autocomplete="tel"')) +
+    fld("email", "Email", inp("email", "email", "", ' autocomplete="email"')) +
+    fld("role", "Your role", inp("role", ph="e.g. Owner, Marketing lead, Media head", extra=' maxlength="60"'), req=False) +
+    fld("state", "State", sel("state", STATES_LIST, "Choose your state…")) +
+    fld("town", "Town or area", inp("town", ph="e.g. Wuse 2, Lekki, Suleja", extra=' maxlength="60" autocomplete="address-level2"')) +
+    "</div></fieldset></div>"
+    '<aside class="bk-sum" aria-label="Your booking"><div class="tl-panel"><p class="tl-k">Your booking</p><dl data-sum></dl>'
+    '<div class="bk-total"><span class="tl-k">Monthly total</span><b data-sum-month>₦0</b></div>'
+    '<div class="bk-total is-big"><span class="tl-k" data-sum-period-l>For 3 months</span><b data-sum-period>₦0</b></div>'
+    '<p class="tl-err" data-err="form" aria-live="polite"></p>'
+    '<div class="tl-btns"><button class="e-btn e-btn--gold" type="button" data-go="wa">Send booking on WhatsApp</button>'
+    '<button class="e-btn e-btn--ghost" type="button" data-go="pay1">Pay first month online</button>'
+    '<button class="e-btn e-btn--ghost" type="button" data-go="payall">Pay all months online</button></div>'
+    '<p class="tl-hint">Ad spend is paid to the platforms directly and is not included. Add-ons are confirmed with you before any payment.</p>'
+    "</div></aside></form>")
+
+BOOK_NEXT = ('<ol class="bk-next"><li><span><b>Audit.</b> We review your pages, competitors and current results.</span></li>'
+             '<li><span><b>Plan.</b> Goals, audience, content pillars and a monthly calendar.</span></li>'
+             '<li><span><b>Create.</b> Designs, reels and captions prepared in advance. You approve posts before they go out.</span></li>'
+             '<li><span><b>Publish.</b> Scheduled posting, replies and ads running.</span></li>'
+             '<li><span><b>Report.</b> Monthly numbers, what worked and next month&#8217;s plan.</span></li></ol>')
+BOOK_FAQ = [
+    ("Is ad spend included?", "No. You pay the platform directly with your own card or account. Our fee covers strategy, creatives and management."),
+    ("What if I need more platforms than my plan includes?", "Pick them anyway. Each platform beyond your plan&#8217;s number is ₦70,000 a month, and the total updates as you choose."),
+    ("Do I approve posts before they go out?", "Yes. You get the month&#8217;s content calendar in advance and can approve or change anything."),
+    ("Who owns the pages?", "You do. We work as admins on your accounts and never as owners."),
+    ("Do you work on political and civic campaigns?", "Yes. Campaign media is scoped and quoted on its own brief, from ₦1,000,000 a month. Send your brief on WhatsApp."),
+]
+book_url = SITE + "/book-social-media"
+book_main = (hero("BOOK", [("Services", "/services"), ("Social Media & Campaigns", "/digital-marketing"), ("Book", None)], "Book online",
+                  "Book social media management", "Choose your plan, pick your platforms, add what you need, and see the price as you go. Then send the booking on WhatsApp or pay online.") +
+             '<section class="section gd"><div class="container">%s<div class="legal-grid tl-sec"><aside class="legal-aside"><p class="footer-label">Also useful</p>'
+             '<ul class="legal-more"><li><a class="text-link" href="/digital-marketing">Social media services</a></li><li><a class="text-link" href="/pricing#digital-marketing">All prices</a></li>'
+             '<li><a class="text-link" href="/work">Our work</a></li></ul></aside><div class="legal-body">'
+             '<section class="legal-sec"><h2>What happens after you book</h2>%s</section>'
+             '<section class="legal-sec" id="faq"><h2>Questions people ask</h2>%s</section></div></div></div></section>'
+             % (BOOK_UI, BOOK_NEXT, faq_html(BOOK_FAQ)))
+page("book-social-media", "Book Social Media Management in Nigeria · 100EMPIRE",
+     "Book social media management with 100EMPIRE: choose a plan from ₦200,000 a month, pick your platforms (Facebook, Instagram, TikTok, YouTube, WhatsApp, X, LinkedIn), add ads or WhatsApp funnels, and pay online.",
+     book_main,
+     [{"@context": "https://schema.org", "@type": "Service", "name": "Social media management", "url": book_url,
+       "provider": {"@type": "Organization", "name": "100EMPIRE", "url": SITE + "/"}, "areaServed": "Nigeria",
+       "offers": [{"@type": "Offer", "name": nm, "price": str(pr), "priceCurrency": "NGN", "url": book_url + "?plan=" + k} for k, nm, pr, *_ in PLANS]},
+      crumbs_ld([("Services", SITE + "/services"), ("Social Media & Campaigns", SITE + "/digital-marketing"), ("Book", book_url)]), faq_ld(BOOK_FAQ)],
+     "book-social-media", BOOK_JS)
+
+print("built:", ", ".join(u.rsplit("/", 1)[1] for u in [dog_url, w_url, web_url, fr_url, vax_url, bp_url, fp_url]) + ", guides, tools, book-social-media")
